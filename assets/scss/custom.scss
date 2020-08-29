@@ -7,8 +7,13 @@
     background-color: #44475A !important;
 }
 
-pre {
+.highlight > pre {
     margin: 1rem 0rem !important;
+    border-radius: 0em !important;
+}
+
+.highlight > div > table > tbody > tr > td > pre {
+    margin: 0em !important;
     border-radius: 0em !important;
 }
 
