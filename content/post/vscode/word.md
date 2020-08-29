@@ -48,7 +48,7 @@ categories: ["Tips"]
 
 作成した .md ファイルの先頭に **（YAML）フロントマター** を追加します。
 
-{{< highlight "yaml" "linenos=table,linenostart=1" >}}
+{{< highlight "yaml" >}}
 ---
 output: word_document
 ---
@@ -76,6 +76,7 @@ output:
     highlight:
     reference_doc:
     pandoc_args:
+
 {{< / highlight >}}
 
 なお、ここでのインデントは実際にフロントマターを記述するさいにも必要なものになります。
@@ -113,7 +114,7 @@ toc_title
 : 目次の見出しを指定できます。何も指定しないと「Table of Contents」になります。後述する `toc` が設定されている必要があります。
 
 かりに、次のようにフロントマターを指定したばあいの出力は下図のようになります。
-{{< highlight "yaml" "linenos=table,linenostart=1" >}}
+{{< highlight "yaml" >}}
 ---
 title: 文書のタイトル
 subtitle: 文書のサブタイトル
@@ -149,7 +150,7 @@ lang
 
 ただ、ここで解決できなかった点がいくつかあります。というのも、本来であればこれらの項目をフロントマターに追加したばあい、書き出された .docx ファイルのプロパティに反映されているはず[^メタデータ]なのですが、手元の Word for Mac で確認できませんでした（Word の「ファイル > プロパティ」から確認できます）。例えばフロントマターを次のように設定したとします。
 
-{{< highlight "yaml" "linenos=table,linenostart=1" >}}
+{{< highlight "yaml" >}}
 ---
 title: タイトル
 subtitle: サブタイトル
