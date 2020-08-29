@@ -10,6 +10,8 @@ categories: ["Book"]
 
 <!--more-->
 
+{{ %TOC% }}
+
 この本を読むにあたり、自分の理解のために [サポートページ](https://github.com/sammy-suyama/BayesBook) にて公開されている Julia による実装を自分なりに実装しなおすことを目標とします。
 
 すでに同じことをされている方はいらっしゃって、Julia 以外にも Python[^python] や R[^r] による実装例なんかを見ることができます。
