@@ -7,6 +7,10 @@ html {
     background-color: #3F3F3F !important;
 }
 
+.dark .highlight > div {
+    background-color: #44475A !important;
+}
+
 .highlight > div > table > tbody > tr > td > pre {
     margin: 0em !important;
     border-radius: 0em !important;
