@@ -10,7 +10,7 @@ categories: ["Book"]
 
 <!--more-->
 
-{{ %TOC% }}
+{{% toc %}}
 
 この本を読むにあたり、自分の理解のために [サポートページ](https://github.com/sammy-suyama/BayesBook) にて公開されている Julia による実装を自分なりに実装しなおすことを目標とします。
 
