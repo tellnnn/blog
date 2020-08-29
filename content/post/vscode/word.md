@@ -48,6 +48,11 @@ categories: ["Tips"]
 
 作成した .md ファイルの先頭に **（YAML）フロントマター** を追加します。
 
+{{< highlight "yaml" "linenos=table,linenostart=1" >}}
+---
+output: word_document
+---
+{{< / highlight >}}
 ```yaml
 ---
 output: word_document
