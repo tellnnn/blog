@@ -53,17 +53,12 @@ categories: ["Tips"]
 output: word_document
 ---
 {{< / highlight >}}
-```yaml
----
-output: word_document
----
-```
 
 この `---` で挟まれた要素がフロントマターで、これだけあれば既に編集中の .md ファイルを .docx ファイルに書き出すことができます。ひとまず .docx ファイルを書き出してみたい方は[3](#3---書き出す) まで飛ばしてもらって構いません。
 
 .docx ファイルに書き出すうえでの必須項目は `output: word_document` だけですが、以下では .docx ファイルに出力する状況に焦点をあてて、この必須項目以外に指定できる要素を一部紹介します。はじめに、紹介する項目を全て列挙すると、次のような感じなります。
 
-```yaml
+{{< highlight "yaml" >}}
 title:
 author:
 date:
@@ -81,7 +76,7 @@ output:
     highlight:
     reference_doc:
     pandoc_args:
-```
+{{< / highlight >}}
 
 なお、ここでのインデントは実際にフロントマターを記述するさいにも必要なものになります。
 
@@ -97,28 +92,28 @@ subtitle
 
 author
 : 著者名を指定できます。複数名書くばあいには次のようにします。
-```yaml
+{{< highlight "yaml" >}}
 author:
   - 著者1
   - 著者2
-```
+{{< / highlight >}}
 
 date
 : 日付を指定できます。
 
 abstract
 : アブストラクトが書けます。改行を含むためには次のようにします。ここでは「第一段落」の後に半角スペースが2つ挿入されていて、このようにすると、Word 上では段落内改行を挿入できます。一方、「第一段落」と「第二段落」の間に空白行を挿入する方法でも書くことができ、このばあい「第二段落」は新しい段落として認識されます。
-```yaml
+{{< highlight "yaml" >}}
 abstract: |
   第1段落  
   第2段落
-```
+{{< / highlight >}}
 
 toc_title
 : 目次の見出しを指定できます。何も指定しないと「Table of Contents」になります。後述する `toc` が設定されている必要があります。
 
 かりに、次のようにフロントマターを指定したばあいの出力は下図のようになります。
-```yaml
+{{< highlight "yaml" "linenos=table,linenostart=1" >}}
 ---
 title: 文書のタイトル
 subtitle: 文書のサブタイトル
@@ -129,7 +124,7 @@ abstract: |
   概要の第二段落
 output: word_document
 ---
-```
+{{< / highlight >}}
 
 {{< figure library="true" src="./vscode/word/simple-example.png" title="基本情報を追加した例" numbered="true" >}}
 
@@ -153,7 +148,8 @@ lang
 : 文書の言語を指定できます。日本語を指定する「ja-JP」にすると欧文に対して和文フォントが適用されるようです。ただ、「ja-JP」を指定すると数式がイタリックになるので、数式を含むばあいは `lang` は指定しない方がよさそうです。
 
 ただ、ここで解決できなかった点がいくつかあります。というのも、本来であればこれらの項目をフロントマターに追加したばあい、書き出された .docx ファイルのプロパティに反映されているはず[^メタデータ]なのですが、手元の Word for Mac で確認できませんでした（Word の「ファイル > プロパティ」から確認できます）。例えばフロントマターを次のように設定したとします。
-```yaml
+
+{{< highlight "yaml" "linenos=table,linenostart=1" >}}
 ---
 title: タイトル
 subtitle: サブタイトル
@@ -172,7 +168,8 @@ description: |
 category: カテゴリ
 lang: ja-JP
 ---
-```
+{{< / highlight>}}
+
 このとき、.docx ファイルのプロパティを確認すると次のようになります。ここで、本来であれば「サブタイトル」や「分類」、「コメント」などにそれぞれ `subtitle`、`category`、`description` などで指定した内容が反映されるはずですが、手元の環境だと反映されていないようです。
 
 {{< figure library="true" src="./vscode/word/word-metadata.png" title=".docx ファイルのメタデータ" numbered="true" >}}
@@ -202,7 +199,7 @@ pandoc_args
 : そのほか Pandoc に渡せるオプションをここで指定できます。今回は `lua-filter` を追加します。詳しくは [後述](#改ページ) します。
 
 ここで紹介した項目は、たとえば、次のように指定することができます。上で紹介した `toc_title` は `toc` が `true` になっていれば反映されます。
-```yaml
+{{< highlight "yaml" >}}
 toc_title: 目次の見出し
 output:
   word_document:
@@ -214,12 +211,12 @@ output:
     pandoc_args: [
       "--lua-filter=path-to-lua-filter"
     ]
-```
+{{< / highlight >}}
 
 #### フロントマターの例
 
 以上を踏まえ、指定できるところそれぞれ指定していくと、以下のような感じになります。もちろん、これらを全て指定する必要はありません。
-```yaml
+{{< highlight "yaml" "linenos=table,linenostart=1" >}}
 ---
 title: タイトル
 subtitle: サブタイトル
@@ -249,7 +246,7 @@ output:
       "--lua-filter=path-to-lua-filter"
     ]
 ---
-```
+{{< / highlight >}}
 
 ### 3 - 書き出す
 
@@ -274,9 +271,9 @@ Word スタイルをいちからつくるのは骨が折れるので、代わり
 -----
 
 1 つめの方法は、ターミナルなどで
-```zsh
+{{< highlight "zsh" "linenos=table,linenostart=1" >}}
 pandoc --print-default-data-file=reference.docx > my_styles.docx
-```
+{{< / highlight >}}
 として、Pandoc の用意している reference.docx をコピーし、それを編集する方法です。コピーして得られたファイルでは見出しや本文などがその名前とともにすべて列挙されています。わかりにくそうなところとしては
 
 First Paragraph
@@ -296,18 +293,18 @@ Verbatim Char
 ふたつめの方法がおすすめできない理由は、文書にコードチャンクが含まれているとうまくいかないことがあるためです。
 
 かりに、Word スタイルを編集するために 1 回目は次のようなフロントマターで .docx ファイルを書き出したとします。
-```yaml
+{{< highlight "yaml" >}}
 output:
   word_document:
     highlight: tango
-```
+{{< / highlight >}}
 この時点で、書き出された .docx ファイルの Word スタイルは、`reference.docx` 内で指定されている Word スタイルに、 `highlight` で指定されたハイライトスタイルを Word スタイル形式で加えたものになっています。さて、コードチャンクの Word スタイルをいじらずに「見出し 1」などを適当に編集して my_styles.docx として保存し、2 回目以降は次のようなフロントマターを指定して .docx ファイルを書き出すとします。
-```yaml
+{{< highlight "yaml" >}}
 output:
   word_document:
     highlight: zenburn
     reference_doc: my_styles.docx
-```
+{{< / highlight >}}
 変更点は、`reference_doc` が追加されたことと、`highlight` を最初に指定していた `tango` とは別のものにしたことです。しかし、先述のように、`my_styles.docx` にはすでに 1 回目に `highlight` に指定したハイライトスタイル（`tagno`）が含まれています。したがって、コードチャンクのスタイルにかんしては今回指定している `zenburn` と `my_styles.docx` に含まれている `tango` が競合している状態になります。このように競合しているばあいはどうやら `reference_doc` が優先されるらしく、あとから `highlight` を変更することができなくなってしまいます。
 
 ひとつめの方法をとるばあいはこのような競合が発生せず、いつでも `highlight` を変更できます。一方で、ふたつめの方法は、実際に自分が書いた文面を見ながら Word スタイルを調整できるため、コードチャンクが含まれない場合はこちらの方が便利かもしれません。
@@ -329,27 +326,27 @@ output:
 では、まず改ページを実装するのに必要な .lua ファイルを準備します。準備するファイルは lua フィルターを集めた [lua-filters](https://github.com/pandoc/lua-filters) というリポジトリに含まれる `pagebreak.lua` です。お好みの方法でお手元の環境にこのファイルを準備してください。
 
 ファイルが準備できたらフロントマターでファイルまでのパスを指定してあげます。例えば、`/Users/USERNAME/.pandoc/pagebreak.lua` がファイルの絶対パスだとしたら
-```yaml
+{{< highlight "yaml" >}}
 output:
   word_document:
     pandoc_args: [
       "--lua-filter=/Users/USERNAME/.pandoc/pagebreak.lua"
     ]
-```
+{{< / highlight >}}
 としてあげます。
 
 実際に改ページを挿入するときには、文書の適当なところで
-```markdown
+{{< highlight "markdown" >}}
 \newpage
-```
+{{< / highlight >}}
 としてあげるとそこでページが改められます。
 
 ### 図の挿入
 
 結論から言えば、個人的には
-```markdown
+{{< highlight "markdown" >}}
 ![図のキャプション](test.png)
-```
+{{< / highlight >}}
 のように挿入するのがよいです。
 
 念のため、とりうる挿入方法を列挙すると、以下の 3 つがあります。
@@ -389,26 +386,26 @@ Markdown Preview Enhanced の設定で項目 `enableScriptExecution` を on に�
 唐突ですが、あなたの手元の環境に Pandoc はいくつ入っているでしょうか……。ちなみにわたしは 3 つ入っていました……。一応それぞれ挙げていくと、
 
 1. Homebrew でインストールしたもの
-```zsh
+{{< highlight "zsh" >}}
 $ /usr/local/bin/pandoc -v
 
 > pandoc 2.10.1
 > Compiled with pandoc-types 1.21, texmath 0.12.0.2, skylighting 0.8.5
-```
-2. Anaconda についてきたもの
-```zsh
+{{< / highlight >}}
+1. Anaconda についてきたもの
+{{< highlight "zsh" >}}
 $ /Users/USERNAME/anaconda3/bin/pandoc -v
 
 > pandoc 2.2.3.2
 > Compiled with pandoc-types 1.17.5.1, texmath 0.11.0.1, skylighting 0.7.2
-```
+{{< / highlight >}}
 3. RStudio についてきたもの
-```zsh
+{{< highlight "zsh" >}}
 $ /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc -v
 
 > pandoc 2.7.3
 > Compiled with pandoc-types 1.17.5.4, texmath 0.11.2.2, skylighting 0.8.1
-```
+{{< / highlight >}}
 
 先述したように Markdown Preview Enhanced は Pandoc を呼び出しているので、このように複数あるばあいはどれかを指定しておいた方が無難かもしれません。指定の仕方は、VSCode で、「Code > 基本設定 > 設定」から「設定の検索」を開いて「Pandoc Path」を検索し、そこに好みの Pandoc のパスを指定してあげるだけです。
 
@@ -419,9 +416,9 @@ $ /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc -v
 > Specify the user data directory to search for pandoc data files. If this option is not specified, the default user data directory will be used. On *nix and macOS systems this will be the pandoc subdirectory of the XDG data directory (by default, $HOME/.local/share, overridable by setting the XDG_DATA_HOME environment variable). If that directory does not exist, $HOME/.pandoc will be used (for backwards compatibility).
 
 とあり、どうやら Pandoc にはユーザーデータディレクトリなるものがあるとわかります。実際、ターミナルなどで
-```zsh
+{{< highlight "zsh" >}}
 pandoc --v
-```
+{{< / highlight >}}
 としてやると、`Default user data directory` としてパスが指定されていることがわかります。
 
 これを見て、なるほど `$HOME/.pandoc` に参照したい .lua ファイル、あるいは style.docx なんかを置いて相対パスを指定すればよいのかと考えたのですが、どうもそうはいかないようで、ファイルが見つからないとエラーが返ってきてしまいました。今のところは絶対パスを指定するか、.md ファイルと同じディレクトリにファイルを置くことで済ませています。
@@ -445,14 +442,14 @@ Markdown で書かれた数式は、Word の数式に自動的に変換されま
 ### 著者の所属やメールアドレスを挿入したい
 
 自分の所属やメールアドレスを氏名に併記することはときおりあって、これをぜひいい感じに処理したいものです。そこで上で説明した [lua-filters](https://github.com/pandoc/lua-filters) というリポジトリにある `scholarly-metadata` と `author-info-blocks` を紹介します。使い方としては、[改ページ](#改ページ) で使った `pagebreak` と同じく `--lua-filter` オプションでパスを指定してあげるだけです（今回は `pagebreak` でつかった `\newpage` のような記述も不要です）。
-```yaml
+{{< highlight "yaml" >}}
 output:
   word_document:
     pandoc_args: [
       "--lua-filter=[scholarly-metadataへのパス]",
       "--lua-filter=[author-info-blocksへのパス]"
     ]
-```
+{{< / highlight >}}
 ここで注意が必要なのは、後者が前者を参照している関係上、必ずこの順で指定しなければならない点です。
 
 さて、ここで悩ましいのは、目次やアブストラクトを入れていると、著者の氏名が表示されるブロックと、著者の所属やメールアドレスが表示されるブロックとが、目次やアブストラクトで分断されてしまうことです（下図）。
@@ -465,8 +462,7 @@ output:
 
 最期に、私が適当につくった .md ファイルを置いておきます。
 
-<pre style="max-height: 300px;">
-<code>
+{{< highlight "markdown" "linenos=table">}}
 ---
 title: タイトル
 subtitle: サブタイトル
@@ -616,9 +612,7 @@ Table: **表1.** これは表1です。
 ## 図
 
 ![**図1.** これは図1です。](https://cdn.pixabay.com/photo/2016/04/25/18/07/halcyon-1352522_1280.jpg)
-
-</code>
-</pre>
+{{< / highlight >}}
 
 ## まとめ
 
