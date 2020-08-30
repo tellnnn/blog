@@ -1,20 +1,27 @@
 .highlight > div {
     padding: 0.4em 0.4em 0.4em 0em !important;
     background-color: #3F3F3F !important;
+    margin-bottom: 1rem;
 }
 
 .dark .highlight > div {
     background-color: #44475A !important;
 }
 
+h2 {
+    margin-top: 2rem;
+}
+
+pre {
+    border-radius: 0em !important;
+}
+
 .highlight > pre {
     margin: 1rem 0rem !important;
-    border-radius: 0em !important;
 }
 
 .highlight > div > table > tbody > tr > td > pre {
     margin: 0em !important;
-    border-radius: 0em !important;
 }
 
 .highlight > div > table > tbody > tr > td > pre > code.yaml {
