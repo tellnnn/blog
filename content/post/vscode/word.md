@@ -42,7 +42,7 @@ categories: ["Tips"]
 
 さて、VSCode 上で .md ファイルを作成したら、VSCode のコマンドパレットから 「Markdown: Markdown Preview Enhanced: Open Preview to the Side」を選択して横にプレビューを開きます（このプレビューは簡易的なもので、最終的な見た目とは異なります）。
 
-{{< figure library="true" src="./vscode/word/command-palette.png" title="VS Code のコマンドパレット" numbered="true" >}}
+{{< figure library="true" src="./content/post/vscode/word/command-palette.png" title="VS Code のコマンドパレット" numbered="true" >}}
 
 ### 2 - フロントマターの追加
 
@@ -127,7 +127,7 @@ output: word_document
 ---
 {{< / highlight >}}
 
-{{< figure library="true" src="./vscode/word/simple-example.png" title="基本情報を追加した例" numbered="true" >}}
+{{< figure library="true" src="./content/post/vscode/word/simple-example.png" title="基本情報を追加した例" numbered="true" >}}
 
 #### Word 文書のメタデータ
 
@@ -173,7 +173,7 @@ lang: ja-JP
 
 このとき、.docx ファイルのプロパティを確認すると次のようになります。ここで、本来であれば「サブタイトル」や「分類」、「コメント」などにそれぞれ `subtitle`、`category`、`description` などで指定した内容が反映されるはずですが、手元の環境だと反映されていないようです。
 
-{{< figure library="true" src="./vscode/word/word-metadata.png" title=".docx ファイルのメタデータ" numbered="true" >}}
+{{< figure library="true" src="./content/post/vscode/word/word-metadata.png" title=".docx ファイルのメタデータ" numbered="true" >}}
 
 ※ Word 文書のメタデータをあえて指定したい場面がどれだけあるのかは未知数で、実際に「Word メタデータ」で検索すると、むしろ消したい場面が多そうです……。
 
@@ -255,7 +255,7 @@ output:
 
 書き出す方法は、VSCode 上でプレビューを横に開いている状態にし、プレビューの上で右クリックして「Pandoc」を選択するだけです（下図）。うまくいくと勝手に .docx ファイルが開きます。エラーがあるばあいは、右下にエラーメッセージが出てくるのでそこで確認ができます。
 
-{{< figure library="true" src="./vscode/word/output.png" title=".docx ファイルの書き出し" numbered="true" width="200" >}}
+{{< figure library="true" src="./content/post/vscode/word/output.png" title=".docx ファイルの書き出し" numbered="true" width="200" >}}
 
 ## 実践 - 2
 
@@ -374,7 +374,7 @@ Markdown Preview Enhanced の設定で項目 `enableScriptExecution` を on に�
 
 コードの実行については、プレビューでコードチャンクにカーソルを合わせると右上に矢印が表示されるので、そこを押すとそのチャンクが実行されます。「all」を押すと全てのチャンクが実行されます（コマンドパレットから実行することもできます）。
 
-{{< figure library="true" src="./vscode/word/code-execution.png" title="コードチャンクの実装" numbered="true">}}
+{{< figure library="true" src="./content/post/vscode/word/code-execution.png" title="コードチャンクの実装" numbered="true">}}
 
 コードを実行する機能はかなり便利ですが、チャンク間で変数を共有するようなので、連続した処理を複数チャンクにわたって書くのには向かなさそうです。
 
@@ -436,7 +436,7 @@ Markdown で書かれた数式は、Word の数式に自動的に変換されま
 
 例えば下図の1行目は、 Pandoc を介したもので、2行目は同じ数式を Word の数式ツールでポチポチ挿入したものですが、前者は積分記号の大きさがイケてないのがわかると思います。
 
-{{< figure library="true" src="./vscode/word/math.png" title="Word の数式" numbered="true" width="200" >}}
+{{< figure library="true" src="./content/post/vscode/word/math.png" title="Word の数式" numbered="true" width="200" >}}
 
 ただ、個人的には Word でそんなに数式を書くこともないので、致命的というわけでもありません。
 
@@ -455,7 +455,7 @@ output:
 
 さて、ここで悩ましいのは、目次やアブストラクトを入れていると、著者の氏名が表示されるブロックと、著者の所属やメールアドレスが表示されるブロックとが、目次やアブストラクトで分断されてしまうことです（下図）。
 
-{{< figure library="true" src="./vscode/word/author-affiliation.png" title="著者の所属・メールアドレス" numbered="true" >}}
+{{< figure library="true" src="./content/post/vscode/word/author-affiliation.png" title="著者の所属・メールアドレス" numbered="true" >}}
 
 色々調べて見たのですが、これよりもよい方法はなかなかなさそうです……。
 
