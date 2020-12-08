@@ -1,6 +1,6 @@
 ---
 # Display name
-title: kD_Dk
+title: TELLNNN
 
 # Username (this should match the folder name)
 authors:
@@ -10,7 +10,7 @@ authors:
 superuser: true
 
 # Role/position
-role: 大学院生
+role: Master's student
 
 # Organizations/Affiliations
 # organizations:
@@ -18,14 +18,14 @@ role: 大学院生
 #   url: ""
 
 # Short bio (displayed in user profile at end of posts)
-# bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: My research interests include perception in human with psychophysics, EEG/MEG, or fMRI.
 
-interests:
-- Artificial Intelligence
-- Data Science
-- Bayesian Statistics
-- R
-- Python
+# interests:
+# - Artificial Intelligence
+# - Data Science
+# - Bayesian Statistics
+# - R
+# - Python
 
 # education:
 #   courses:
