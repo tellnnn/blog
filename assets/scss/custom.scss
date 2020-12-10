@@ -1,19 +1,22 @@
-.highlight > div {
-    padding: 0.4em 0.4em 0.4em 0em !important;
-    background-color: #3F3F3F !important;
-    margin-bottom: 1rem;
+article h2 {
+    font-size: 2rem;
+    margin-top: 2.5rem;
 }
 
-.dark .highlight > div {
-    background-color: #44475A !important;
+.light article h2 {
+    border-bottom: solid 3px #313131;
 }
 
-h2 {
-    margin-top: 2rem;
+.dark article h2 {
+    border-bottom: solid 3px #98a6ad;
 }
 
 pre {
     border-radius: 0em !important;
+}
+
+.highlight > div {
+    margin-bottom: 1rem;
 }
 
 .highlight > pre {
