@@ -7,7 +7,7 @@ tags: ["Bayes","Machine Learning","C++","R"]
 categories: ["Book"]
 ---
 
-この記事では[読書記録『機械学習スタートアップシリーズ ベイズ推論による機械学習入門』](../../toc)のうち、「4.3 ポアソン混合モデルにおける推論」で使用するデモデータの生成を実装します。
+この記事では[読書記録『機械学習スタートアップシリーズ ベイズ推論による機械学習入門』]({{< ref "/post/reading/BayesBook/TOC.md" >}})のうち、「4.3 ポアソン混合モデルにおける推論」にかんして、デモデータの生成を実装します。
 
 <!--more-->
 
@@ -47,7 +47,7 @@ using namespace math;
 using namespace Eigen;
 {{< / highlight >}}
 
-### デモデータ生成関数
+### generate_data 関数
 
 さっそく、デモデータを生成するための関数 `generate_data` を定義します。今回はポアソン混合モデルにしたがってデータを生成するため、入力として以下のものを考えます。
 
@@ -58,8 +58,6 @@ using namespace Eigen;
 |`lambda`|長さ `K` のベクトル|各ポアソン分布のパラメータ|
 |`pi`|長さ `K` のベクトル（総和が 1）|混合比率|
 |`seed`|整数|乱数生成のためのシード値|
-
-まずは、`generate_data` 関数全体をお見せします。
 
 {{< highlight cpp "linenos=table,linenostart=13" >}}
 void generate_data(int N, int K, VectorXd lambda, VectorXd pi, int seed) {
@@ -92,21 +90,15 @@ void generate_data(int N, int K, VectorXd lambda, VectorXd pi, int seed) {
 }
 {{< / highlight >}}
 
-ほしい変数をサンプリングしつつ `data.csv` にその結果を書き出していきます。
+`for` 文の中では、$x_{n}$ をサンプリングすることを考え、まずは混合比率 `pi` をパラメータにもつカテゴリ分布から潜在変数 `s` をサンプリングします。このとき、書籍では潜在変数が 1 of K (one-hot) 表現になっていますが、ここでは `s` は $1 \ldots K$ の値をとります。
 
-1 では、サンプリングしたい潜在変数 $s_{n}$ とデータ $X$ をそれぞれ `s` および `X` として宣言しています。
-
-3 の `for` 文の中では、$x_{n}$ をサンプリングすることを考え、まずは混合比率 `pi` をパラメータにもつカテゴリ分布から潜在変数 `s` をサンプリングします。このとき、書籍では潜在変数が 1 of K (one-hot) 表現になっていますが、`s` は $1 \ldots K$ の値をとります。
-
-つぎに、得られた `s` をもとに、$\lambda_{k}$ すなわち `lambda(s-1)` をパラメータにもつポアソン分布からデータ `X` をサンプリングします。
+つぎに、得られた `s` をもとに、$\lambda_{k}$ すなわち `lambda(s-1)` （zero-based のため -1）をパラメータにもつポアソン分布からデータ `X` をサンプリングします。
 
 さいごに、サンプリングした `s` や `X` を `data.csv` に順に書き出したら完了です。
 
 ### main 関数
 
-さて、つぎに PMM.cpp をコンパイルしたあと、実行するさいに `N` や `lambda` といった入力を渡しつつ `generate_data` 関数を実行できるよう、`main` 関数を定義し、入力はコマンドライン引数として渡すことにします。
-
-まず、該当箇所をお見せします。
+PMM.cpp を実行するさいに `N` や `lambda` といった入力を渡しつつ `generate_data` 関数を実行できるよう、`main` 関数を定義し、入力はコマンドライン引数として渡すことにします。
 
 {{< highlight cpp "linenos=table,linenostart=370" >}}
 int main(int argc, char *argv[]) {
@@ -132,13 +124,13 @@ int main(int argc, char *argv[]) {
         generate_data(N, K, lambda, pi, seed);
 {{< / highlight >}}
 
-ここで、コマンドライン引数の 1 番目として `method` を受け取っていますが、これはこのプログラムを実行するさいに、`method` として `"data"` を渡せばデモデータを生成し、`"GS"` を渡せばギブサンプリングを、`"VI"` を渡せば変分推論を、`"CGS"` を渡せば崩壊型ギブスンサンプリングを実行するように意図したものです。
+ここで、コマンドライン引数の 1 番目として `method` を受け取っていますが、これは実行するさいに、`method` として `"data"` を渡せばデモデータを生成し、`"GS"` を渡せばギブサンプリングによる推論を、`"VI"` を渡せば変分推論を、`"CGS"` を渡せば崩壊型ギブスンサンプリングによる推論を実行するように意図したものです。
 
 それ以外のコマンドライン引数は、冒頭で説明したとおり、`N`、`K`、`seed`、長さ `K` のベクトルとして `lambda` および `pi` です。
 
 ## 実行 (PMM.R)
 
-では、PMM.cpp をコンパイルして実行し、生成されたデモデータが確認できるように、PMM.R を実装します。
+PMM.cpp をコンパイルして実行し、生成されたデモデータが確認できるように、PMM.R を実装します。
 
 ### 準備
 
@@ -152,6 +144,7 @@ int main(int argc, char *argv[]) {
 library(tidyverse)
 library(colorspace)
 library(patchwork)
+library(ggdist)
 
 
 # functions ------------------------------
@@ -170,9 +163,9 @@ make_plot <- function(method, K, s, X, bins = 30) {
 
 ### コンパイル
 
-PMM.cpp をコンパイルします。いちいちシェルを開かなくて済むように `system` 関数を使用します。
+PMM.cpp をコンパイルします。`system` 関数を使用します。
 
-{{< highlight r "linenos=table,linenostart=24" >}}
+{{< highlight r "linenos=table,linenostart=25" >}}
 # compile c++ file ------------------------------
 stan_math_standalone <- "$HOME/.cmdstanr/cmdstan-2.24.0/stan/lib/stan_math/make/standalone"
 str_c("make -j4 -s -f", stan_math_standalone, "math-libs", sep = " ") %>% system()
@@ -185,11 +178,19 @@ str_c("make -j4 -s -f", stan_math_standalone, "PMM",       sep = " ") %>% system
 
 ### 実行
 
-ではコンパイルして得られた実行ファイルを実行します。今回は、サンプルサイズが 1000、クラスター数が 2、ポアソン分布のパラメータがそれぞれ 44、77、混合比率が 0.5、0.5 であるようなデモデータを生成してみます。
+ではコンパイルして得られたファイルを実行します。今回はパラメータを次のように設定しました。
+
+|入力|概要|値|
+|:--|:--|:--|
+|`N`|サンプルサイズ|1000|
+|`K`|クラスター数|2|
+|`lambda`|各ポアソン分布のパラメータ|44, 77|
+|`pi`|混合比率|0.5, 0.5|
+|`seed`|乱数生成のためのシード値|6|
 
 コマンドライン引数が用意できたら、それらを渡しつつ `system` 関数を使って実行します。
 
-{{< highlight r "linenos=table,linenostart=30" >}}
+{{< highlight r "linenos=table,linenostart=31" >}}
 # generate data ------------------------------
 method <- "data"
 N <- 1000
@@ -204,10 +205,24 @@ str_c("./PMM", method, N, K, gen_seed,
       str_c(pi, collapse = " "),
       sep = " ") %>% 
   system()
+{{< / highlight >}}
 
+今回の設定だと `system` 関数の入力は
+{{< highlight zsh >}}
+./PMM data 1000 2 6 44 77 0.5 0.5
+{{< / highlight >}}
+となっています。
+
+さて、実行すると結果が格納された `data.csv` が生成されるので、それを読み込みます。
+
+{{< highlight r "linenos=table,linenostart=46" >}}
 # read csv
 demo_data <- read_csv(file = "data.csv", col_names = TRUE, col_types = "ii")
+{{< / highlight >}}
 
+最後に読み込んだデータを可視化してみます。
+
+{{< highlight r "linenos=table,linenostart=49" >}}
 # plot
 demo_data_plot <- 
   make_plot(
@@ -221,17 +236,9 @@ demo_data_plot <-
 ggsave(filename = "demo_data.png", plot = demo_data_plot, width = 100, height = 75, units = "mm")
 {{< / highlight >}}
 
-39 行目ですが、今回の設定だと `str_c` の結果は
-{{< highlight zsh >}}
-./PMM data 1000 2 6 44 77 0.5 0.5
-{{< / highlight >}}
-となっています。
-
-さて、実行すると結果が格納された `data.csv` が生成されるので、それを読み込み、可視化すると次のようなデモデータが確認できます。
-
 {{< figure library="true" src="./content/post/reading/BayesBook/PMM/demo_data.png" title="デモデータ" numbered="true" >}}
 
-図は載せませんが、クラスター数を増やしたり、サンプルサイズを増やしたりすることもできます。
+図は載せませんが、この他にも、クラスター数を増やしたり、サンプルサイズを増やしたりすることもできます。
 
 というわけで、今回はデモデータを生成する関数を実装しました。以降の記事ではこの関数を使って生成されたデモデータに対して推論をします。
 
@@ -241,7 +248,7 @@ ggsave(filename = "demo_data.png", plot = demo_data_plot, width = 100, height = 
 
 ### split 関数
 
-ひとつは、ギブスサンプリングや変分推論などを実行するさいに、生成した `data.csv` を読み込むためのものです。これはほかの方の記事[^csv]からお借りしてきたものです。
+ひとつは、今後推論を実装するさいに、生成した `data.csv` を読み込むための関数です。これはほかの方の記事[^csv]からお借りしてきたものです。
 
 {{< highlight cpp "linenos=table,linenostart=42" >}}
 std::vector<std::string> split(std::string& input, char delimiter) {
@@ -259,7 +266,7 @@ std::vector<std::string> split(std::string& input, char delimiter) {
 
 ### calc_ELBO 関数
 
-もうひとつは、最後にギブスサンプリング、変分推論、崩壊型ギブスサンプリングを比較するさいに指標として用いられる ELBO を計算するためのものです。導出については、書籍の Appendix に記載があります。
+もうひとつは、最後にギブスサンプリング、変分推論、崩壊型ギブスサンプリングを比較するさいに指標として用いられる ELBO を計算するための関数です。導出については、書籍の Appendix に記載があります。
 
 {{< highlight cpp "linenos=table,linenostart=54" >}}
 double calc_ELBO(int N, int K, VectorXi X,
