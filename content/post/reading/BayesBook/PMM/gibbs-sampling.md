@@ -277,7 +277,7 @@ method <- "GS"
 gs_seed <- 1
 MAXITER <- 1e+2
 
-str_c("./PMM", method, N, K, gs_seed, MAXITER, sep = " ") %>% system()
+str_c("./PMM", method, N, K, gs_seed, as.integer(MAXITER), sep = " ") %>% system()
 {{< / highlight >}}
 
 生成されたサンプルは `GS-samples.csv` に保存されるので、それを読み込みます。
