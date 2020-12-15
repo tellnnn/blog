@@ -289,7 +289,7 @@ method <- "CGS"
 cgs_seed <- 1
 MAXITER <- 1e+2
 
-str_c("./PMM", method, N, K, cgs_seed, MAXITER, sep = " ") %>% system()
+str_c("./PMM", method, N, K, cgs_seed, as.integer(MAXITER), sep = " ") %>% system()
 {{< / highlight >}}
 
 生成されたサンプルは `CGS-samples.csv` に保存されるので、それを読み込みます。
