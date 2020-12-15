@@ -161,7 +161,7 @@ for (method in names(sim_res)) {
   for (i in 1:N_rep) {
     sprintf("i = %i ", i) %>% cat()
     
-    str_c("./PMM", method, N, K, i, MAXITER, sep = " ") %>% system()
+    str_c("./PMM", method, N, K, i, as.integer(MAXITER), sep = " ") %>% system()
     
     # read samples.csv
     sim_res[[method]][[i]] <- 
