@@ -239,7 +239,7 @@ LaTeX のパッケージ TikZ を使って書くやり方です。本命です�
 
 ### エディター
 
-R 使いのベイジアンにぜひともおすすめしたいのが RStudio です。ご存知のとおり RStudio 上で .tex ファイルをコンパイルできるだけでなく、今度リリースされる RStudio v1.4 では複数の source pane を横に並べることができるようになるそうです（[こんな感じ](https://blog.rstudio.com/2020/10/21/rstudio-1-4-preview-multiple-source-columns/) ）。つまり、.stan ファイルでモデルを定義しながら、.tex ファイルでそのモデルを描画していくなんてこともできてしまいます。
+R 使いのベイジアンにぜひともおすすめしたいのが RStudio です。ご存知のとおり RStudio 上で .tex ファイルをコンパイルできるだけでなく、今度リリースされる RStudio v1.4 では複数の source pane を横に並べることができるようになるそうです（[こんな感じ](https://blog.rstudio.com/2020/10/21/rstudio-1-4-preview-multiple-source-columns/) ）。つまり、.stan ファイルでモデルを定義しながら、.tex ファイルでそのモデルを描画していくなんてこともできてしまいます。（以下追記）さらに、これはお教えいただいたものなのですが、R Markdown では TikZ エンジンを使うことができ、そのまま TikZ の図が埋め込めてしまいます……（[参照](https://bookdown.org/yihui/rmarkdown/language-engines.html) ）！べんり……！
 
 また、万人におすすめできるのは Overleaf です。なにより面倒な環境構築をしなくてよいのが魅力です。
 
