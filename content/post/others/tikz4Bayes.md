@@ -8,7 +8,7 @@ categories: ["Tips"]
 
 この記事は[ベイズ塾 Advent Calendar 2020](https://adventar.org/calendars/5083) の 18 日目の記事です。
 
-<!-- more -->
+<!--more-->
 
 ## グラフィカルモデル（プレート表現）
 
