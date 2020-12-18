@@ -1,7 +1,7 @@
 ---
 title: TikZ でグラフィカルモデルを書こう！
 date: "2020-12-18"
-toc: false
+toc: true
 tags: ["Bayes","LaTeX","TikZ"]
 categories: ["Tips"]
 ---
